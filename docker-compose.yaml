@@ -1,0 +1,5 @@
+version: "3.3"
+services:
+  pioneer:
+    build: .
+    network_mode: host
