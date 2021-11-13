@@ -1,11 +1,13 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
+var cors = require("cors");
 const dotenv = require("dotenv");
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8080;
+app.use(cors());
 
 const uri = process.env.URI;
 const client = new MongoClient(uri);
@@ -23,5 +25,5 @@ app.get("/trades/history/all", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Pioneer listening at http://localhost:${port}`);
 });
