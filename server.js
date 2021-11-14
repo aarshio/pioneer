@@ -14,14 +14,17 @@ const client = new MongoClient(uri);
 client.connect();
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("👽 Pioneer 10.1");
 });
 
 app.get("/trades/history/all", async (req, res) => {
   const database = client.db("trades");
-  const collection = database.collection("history");
-  const findResult = await collection.find({}).toArray();
-  res.send(findResult);
+  const historyCollection = database.collection("history");
+  const freshCollection = database.collection("fresh");
+
+  const findResult = await historyCollection.find({}).toArray();
+  const lastRun = await freshCollection.findOne({ _id: "history" });
+  res.send({ lastRun: lastRun, rows: findResult });
 });
 
 app.listen(port, () => {
